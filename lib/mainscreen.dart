@@ -15,7 +15,7 @@ class _MainScreenState extends State<MainScreen> {
         title: const Text("TODO App"),
         centerTitle: true,
         actions: [
-          IconButton(onPressed: onPressed, icon: icon)
+          IconButton(onPressed: (){}, icon: Icon(Icons.add))
         ],
       ),
     );

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class AddTask extends StatefulWidget {
-  final void Function({required String todoText}) updateText;
-  const AddTask({super.key, required this.updateText});
+  final void Function({required String todoText}) addToto;
+  const AddTask({super.key, required this.addToto});
 
   @override
   State<AddTask> createState() => _AddTaskState();
@@ -26,7 +26,7 @@ class _AddTaskState extends State<AddTask> {
         ElevatedButton(
           onPressed: () {
             print(todoText.text);
-            widget.updateText(todoText: todoText.text);
+            widget.addToto(todoText: todoText.text);
             todoText.clear();
           },
           child: const Text("Add"),

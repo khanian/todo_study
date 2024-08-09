@@ -9,45 +9,53 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  String text = "to do test";
-  void updateText({required String todoText}){
+  List<String> todoList = [];
+
+  void addTodo({required String todoText}) {
     setState(() {
-      text = todoText;
+      todoList.add(todoText);
     });
+    Navigator.pop(context);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: const Drawer(
-        child: Text("Drawer"),
-      ),
-      appBar: AppBar(
-        title: const Text("TODO App"),
-        centerTitle: true,
-        actions: [
-          IconButton(
-              onPressed: (){
-                showModalBottomSheet(
+        drawer: const Drawer(
+          child: Text("Drawer"),
+        ),
+        appBar: AppBar(
+          title: const Text("TODO App"),
+          centerTitle: true,
+          actions: [
+            IconButton(
+                onPressed: () {
+                  showModalBottomSheet(
                     context: context,
-                    builder: (context){
+                    builder: (context) {
                       return Padding(
                         padding: MediaQuery.of(context).viewInsets,
                         //child: Container(
                         child: Container(
                           height: 250,
-                          child: AddTask(updateText: updateText,),
+                          child: AddTask(
+                            addToto: addTodo,
+                          ),
                         ),
                       );
                     },
-                );
-              },
-              icon: const Icon(Icons.add))
-        ],
-      ),
-      body: SizedBox(
-        child: Text(text),
-      ),
-    );
+                  );
+                },
+                icon: const Icon(Icons.add))
+          ],
+        ),
+        body: ListView.builder(
+          itemCount: todoList.length,
+          itemBuilder: (context, index){
+            return ListTile(
+              title: Text(todoList[index]),
+            );
+          },
+        ));
   }
 }

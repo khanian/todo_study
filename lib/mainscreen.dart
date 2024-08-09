@@ -10,9 +10,9 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   String text = "to do test";
-  void updateText(){
+  void updateText({required String todoText}){
     setState(() {
-      text = "Job done";
+      text = todoText;
     });
   }
 

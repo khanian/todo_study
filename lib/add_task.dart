@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class AddTask extends StatefulWidget {
-  const AddTask({super.key});
+  final void Function() updateText;
+  const AddTask({super.key, required this.updateText});
 
   @override
   State<AddTask> createState() => _AddTaskState();
@@ -26,6 +27,7 @@ class _AddTaskState extends State<AddTask> {
           onPressed: () {
             print(todoText.text);
             todoText.clear();
+            widget.updateText();
           },
           child: const Text("Add"),
         )

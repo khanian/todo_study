@@ -36,7 +36,7 @@ class _MainScreenState extends State<MainScreen> {
                         //child: Container(
                         child: Container(
                           height: 250,
-                          child: AddTask(),
+                          child: AddTask(updateText: updateText,),
                         ),
                       );
                     },

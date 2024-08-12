@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todo_study/add_task.dart';
 
 class MainScreen extends StatefulWidget {
@@ -10,12 +11,18 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   List<String> todoList = [];
-
   void addTodo({required String todoText}) {
     setState(() {
       todoList.insert(0, todoText);
     });
+    writeLocalData();
     Navigator.pop(context);
+  }
+
+  Future<void> writeLocalData() async {
+    // Obtain shared preferences.
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setStringList('todoList', todoList);
   }
 
   @override
@@ -50,8 +57,29 @@ class _MainScreenState extends State<MainScreen> {
         ),
         body: ListView.builder(
           itemCount: todoList.length,
-          itemBuilder: (context, index){
+          itemBuilder: (context, index) {
             return ListTile(
+              onTap: () {
+                showModalBottomSheet(
+                  context: context,
+                  builder: (context) {
+                    return Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(20),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          setState(() {
+                            todoList.removeAt(index);
+                          });
+                          writeLocalData();
+                          Navigator.pop(context);
+                        },
+                        child: Text("Task Done"),
+                      ),
+                    );
+                  },
+                );
+              },
               title: Text(todoList[index]),
             );
           },

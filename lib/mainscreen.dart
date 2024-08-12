@@ -13,7 +13,7 @@ class _MainScreenState extends State<MainScreen> {
 
   void addTodo({required String todoText}) {
     setState(() {
-      todoList.add(todoText);
+      todoList.insert(0, todoText);
     });
     Navigator.pop(context);
   }
@@ -35,7 +35,6 @@ class _MainScreenState extends State<MainScreen> {
                     builder: (context) {
                       return Padding(
                         padding: MediaQuery.of(context).viewInsets,
-                        //child: Container(
                         child: Container(
                           height: 250,
                           child: AddTask(

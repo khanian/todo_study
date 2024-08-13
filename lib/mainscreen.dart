@@ -79,14 +79,14 @@ class _MainScreenState extends State<MainScreen> {
                 ),
               ),
               ListTile(
-                onTap: (){
+                onTap: () {
                   launchUrl(Uri.parse("https://www.youtube.com/@khanyli"));
                 },
                 leading: const Icon(Icons.youtube_searched_for_rounded),
                 title: Text("About Me"),
               ),
               ListTile(
-                onTap: (){
+                onTap: () {
                   launchUrl(Uri.parse("https://www.facebook.com/khany.liegh"));
                 },
                 leading: const Icon(Icons.facebook_rounded),
@@ -119,34 +119,60 @@ class _MainScreenState extends State<MainScreen> {
                 icon: const Icon(Icons.add))
           ],
         ),
-        body: ListView.builder(
-          itemCount: todoList.length,
-          itemBuilder: (context, index) {
-            return ListTile(
-              onTap: () {
-                showModalBottomSheet(
-                  context: context,
-                  builder: (context) {
-                    return Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.all(20),
-                      child: ElevatedButton(
-                        onPressed: () {
-                          setState(() {
-                            todoList.removeAt(index);
-                          });
-                          writeLocalData();
-                          Navigator.pop(context);
-                        },
-                        child: Text("Task Done"),
+        body: (todoList.isEmpty)
+            ? const Center(
+                child: Text(
+                  "No items on the list",
+                  style: TextStyle(fontSize: 20),
+                ),
+              )
+            : ListView.builder(
+                itemCount: todoList.length,
+                itemBuilder: (context, index) {
+                  return Dismissible(
+                    key: UniqueKey(),
+                    direction: DismissDirection.startToEnd,
+                    background: Container(
+                      color: Colors.red,
+                      child: const Row(
+                        children: [Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Icon(Icons.check),
+                        )],
                       ),
-                    );
-                  },
-                );
-              },
-              title: Text(todoList[index]),
-            );
-          },
-        ));
+                    ),
+                    onDismissed: (direction) {
+                      setState(() {
+                        todoList.removeAt(index);
+                      });
+                      writeLocalData();
+                    },
+                    child: ListTile(
+                      onTap: () {
+                        showModalBottomSheet(
+                          context: context,
+                          builder: (context) {
+                            return Container(
+                              width: double.infinity,
+                              padding: const EdgeInsets.all(20),
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  setState(() {
+                                    todoList.removeAt(index);
+                                  });
+                                  writeLocalData();
+                                  Navigator.pop(context);
+                                },
+                                child: Text("Task Done"),
+                              ),
+                            );
+                          },
+                        );
+                      },
+                      title: Text(todoList[index]),
+                    ),
+                  );
+                },
+              ));
   }
 }

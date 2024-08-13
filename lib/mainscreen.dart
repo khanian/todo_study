@@ -25,6 +25,21 @@ class _MainScreenState extends State<MainScreen> {
     await prefs.setStringList('todoList', todoList);
   }
 
+  Future<void> loadData() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    // Try reading data from the 'items' key. If it doesn't exist, returns null.
+    setState(() {
+      todoList = (prefs.getStringList('todoList') ?? []).toList();
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    loadData();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

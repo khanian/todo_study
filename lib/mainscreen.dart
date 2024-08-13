@@ -98,26 +98,6 @@ class _MainScreenState extends State<MainScreen> {
       appBar: AppBar(
         title: const Text("TODO App"),
         centerTitle: true,
-        actions: [
-          IconButton(
-              onPressed: () {
-                showModalBottomSheet(
-                  context: context,
-                  builder: (context) {
-                    return Padding(
-                      padding: MediaQuery.of(context).viewInsets,
-                      child: Container(
-                        height: 250,
-                        child: AddTask(
-                          addToto: addTodo,
-                        ),
-                      ),
-                    );
-                  },
-                );
-              },
-              icon: const Icon(Icons.add))
-        ],
       ),
       body: (todoList.isEmpty)
           ? const Center(
